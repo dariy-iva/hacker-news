@@ -1,43 +1,40 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import "./App.css";
-import { api } from "../../utils/api";
+// import { api } from "../../utils/api";
 import Header from "../Header/Header";
+import Preloader from "../Preloader/Preloader";
 import NewsList from "../NewsList/NewsList";
+import { PreloaderContext } from "../../context/PreloaderContext";
+import { connect } from "react-redux";
+import { getNewsList, setNews } from "../../redux/slices/newsSlice";
 
-function App() {
-  const [idList, setIdList] = React.useState([]);
-  const [news, setNews] = React.useState([]);
+function App({ news, setNews }) {
+  const [isOpenPreloader, setIsOpenPreloader] = React.useState(false);
+  const mainPage = news.length === 100 ? <NewsList news={news} /> : <Preloader isVisible={true}/>
 
   React.useEffect(() => {
-    const arr = []
-    api
-      .getNewsId()
-      .then((arrId) => {
-        for (let i = 0; i < 100; i++) {
-          api
-          .getItem(arrId[i])
-          .then((item) => {
-            arr.push(item);
-          })
-          .catch((err) => console.log(err));
-        }
-        setNews(arr);
-      })
-      .catch((err) => console.log(err));
+    getNewsList();
   }, []);
+  console.log(news);
 
   return (
-    <>
+    <PreloaderContext.Provider value={isOpenPreloader}>
       <Header />
       <Switch>
         <Route exact path="/">
-          <NewsList news={news} />
+          {mainPage}
         </Route>
         <Route path="/new"></Route>
       </Switch>
-    </>
+      <Preloader isVisible={isOpenPreloader} />
+    </PreloaderContext.Provider>
   );
 }
 
-export default App;
+export default connect(
+  (state) => ({
+    news: state.news,
+  }),
+  { setNews }
+)(App);
