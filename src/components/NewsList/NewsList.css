@@ -1,0 +1,33 @@
+.news {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.news__list {
+  margin: 7px 0;
+  display: grid;
+  grid-row-gap: 7px;
+}
+
+.new__link {
+  color: var(--black);
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 700;
+  margin: 0;
+}
+
+.new__caption {
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: normal;
+  margin: 5px 0 0;
+}
+
+ol li::marker {
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: normal;
+}
