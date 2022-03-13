@@ -7,32 +7,33 @@ import Preloader from "../Preloader/Preloader";
 import NewsList from "../NewsList/NewsList";
 import { PreloaderContext } from "../../context/PreloaderContext";
 import { connect } from "react-redux";
-// import { getNewsList, setNews } from "../../redux/slices/newsSlice";
-import { setNews } from "../../redux/slices/newsSlice";
+import { getNewsList } from "../../redux/slices/newsSlice";
 
-function App({ news, setNews }) {
+
+function App({ news, getNewsList }) {
   const [isOpenPreloader, setIsOpenPreloader] = React.useState(false);
   const mainPage = news.length === 100 ? <NewsList news={news} /> : <Preloader isVisible={true}/>
 
-  function getNew(newId) {
-    api
-      .getItem(newId)
-      .then((item) => {
-        setNews(item);
-      })
-      .catch((err) => console.log(err));
-}
+//   function getNew(newId) {
+//     api
+//       .getItem(newId)
+//       .then((item) => {
+//         setNews(item);
+//       })
+//       .catch((err) => console.log(err));
+// }
 
 
   React.useEffect(() => {
-      api
-        .getNewsId()
-        .then((arrId) => {
-          for (let i = 0; i < 100; i++) {
-            getNew(arrId[i]);
-          }
-        })
-        .catch((err) => console.log(err));
+    getNewsList();
+      // api
+      //   .getNewsId()
+      //   .then((arrId) => {
+      //     for (let i = 0; i < 100; i++) {
+      //       getNew(arrId[i]);
+      //     }
+      //   })
+      //   .catch((err) => console.log(err));
     
   }, []);
 
@@ -52,7 +53,7 @@ function App({ news, setNews }) {
 
 export default connect(
   (state) => ({
-    news: state.news,
+    news: state.news.news,
   }),
-  { setNews }
+  { getNewsList }
 )(App);

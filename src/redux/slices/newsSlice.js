@@ -1,41 +1,44 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { api } from "../../utils/api";
 
-const initialState = [];
+const getNew = createAsyncThunk("news/getNew", (newId) => {
+  return api
+    .getItem(newId)
+    .then(item => item)
+    .catch((err) => console.log(err));
+});
+
+export const getNewsList = () => (dispatch) => {
+  return api
+    .getNewsId()
+    .then((arrId) => {
+      for (let i = 0; i < 100; i++) {
+        dispatch(getNew(arrId[i]));
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
+const initialState = {
+  news: [],
+};
 
 export const newsSlice = createSlice({
   name: "news",
   initialState,
   reducers: {
-    setNews(state, action) {
-      return [...state, action.payload];
+    // setNews(state, action) {
+    //   return [...state, action.payload];
+    // },
+  },
+  extraReducers: {
+    [getNew.fulfilled]: (state, action) => {
+      state.news = [...state.news, action.payload];
     },
   },
 });
 
-// export function getNew (newId) {
-//   return dispatch => {
 
-//   api
-//     .getItem(newId)
-//     .then((item) => {
-//       console.log(newId);
-//       dispatch(setNews(item));
-//     })
-//     .catch((err) => console.log(err));
-// };
-// }
 
-// export const getNewsList = () => {
-//   api
-//     .getNewsId()
-//     .then((arrId) => {
-//       for (let i = 0; i < 100; i++) {
-//         getNew(arrId[i]);
-//       }
-//     })
-//     .catch((err) => console.log(err));
-// };
-
-export const { setNews } = newsSlice.actions;
+// export const { setNews } = newsSlice.actions;
 export default newsSlice.reducer;
