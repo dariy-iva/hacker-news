@@ -27,6 +27,9 @@ export const newsSlice = createSlice({
   name: "news",
   initialState,
   reducers: {
+    clearNews(state) {
+      state.news = [];
+    }
     // setNews(state, action) {
     //   return [...state, action.payload];
     // },
@@ -40,5 +43,5 @@ export const newsSlice = createSlice({
 
 
 
-// export const { setNews } = newsSlice.actions;
+export const { clearNews } = newsSlice.actions;
 export default newsSlice.reducer;

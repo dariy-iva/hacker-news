@@ -30,4 +30,17 @@ ol li::marker {
   font-size: 14px;
   line-height: 1.2;
   font-weight: normal;
+  color: var(--black);
+}
+
+.news__button-refresh {
+  box-sizing: border-box;
+  border: 1px solid var(--gray);
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: normal;
+  text-align: center;
+  color: var(--black);
+  padding: 5px 0;
+  cursor: pointer;
 }

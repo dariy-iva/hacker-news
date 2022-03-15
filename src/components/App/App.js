@@ -1,40 +1,32 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import "./App.css";
-import { api } from "../../utils/api";
 import Header from "../Header/Header";
 import Preloader from "../Preloader/Preloader";
 import NewsList from "../NewsList/NewsList";
 import { PreloaderContext } from "../../context/PreloaderContext";
 import { connect } from "react-redux";
-import { getNewsList } from "../../redux/slices/newsSlice";
+import { getNewsList, clearNews } from "../../redux/slices/newsSlice";
 
-
-function App({ news, getNewsList }) {
+function App({ news, getNewsList, clearNews }) {
   const [isOpenPreloader, setIsOpenPreloader] = React.useState(false);
-  const mainPage = news.length === 100 ? <NewsList news={news} /> : <Preloader isVisible={true}/>
+  const mainPage =
+    news.length > 1 ? (
+      <NewsList news={news} onRefreshButtonClick={refreshNewsList} />
+    ) : (
+      <Preloader isVisible={true} />
+    );
 
-//   function getNew(newId) {
-//     api
-//       .getItem(newId)
-//       .then((item) => {
-//         setNews(item);
-//       })
-//       .catch((err) => console.log(err));
-// }
-
+  function refreshNewsList() {
+    clearNews();
+    getNewsList();
+  }
 
   React.useEffect(() => {
     getNewsList();
-      // api
-      //   .getNewsId()
-      //   .then((arrId) => {
-      //     for (let i = 0; i < 100; i++) {
-      //       getNew(arrId[i]);
-      //     }
-      //   })
-      //   .catch((err) => console.log(err));
-    
+    setInterval(() => {
+      refreshNewsList();
+    }, 60000);
   }, []);
 
   return (
@@ -55,5 +47,5 @@ export default connect(
   (state) => ({
     news: state.news.news,
   }),
-  { getNewsList }
+  { getNewsList, clearNews }
 )(App);

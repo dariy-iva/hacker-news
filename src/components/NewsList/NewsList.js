@@ -1,20 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./NewsList.css";
+import { convertDate } from "../../utils/convertDate";
 
-function NewsList({ news }) {
-  function timeConverter(unixTime) {
-    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    const data = new Date(unixTime * 1000);
-    const day = data.getDate();
-    const month = months[data.getMonth()];
-    const year = data.getFullYear();
-    const hours = data.getHours();
-    const minutes = data.getMinutes();
-    const seconds = data.getSeconds();
-    return day + ' ' + month + ' ' + year + ' ' + hours + ":" + minutes + ":" + seconds;
-  }
-  
+function NewsList({ news, onRefreshButtonClick }) {
   return (
     <section className="news">
       <ol className="news__list">
@@ -25,14 +14,21 @@ function NewsList({ news }) {
                 <Link className="new__link link-hover" to={`/new/${item}`}>
                   {item?.title || ""}
                 </Link>
-                <p className="new__caption">{`${item?.score || 0} point${item?.score > 1 ? 's' : ''} by ${
-                  item?.by || ""
-                } ${timeConverter(item.time) || ""}`}</p>
+                <p className="new__caption">{`${item?.score || 0} point${
+                  item?.score > 1 ? "s" : ""
+                } by ${item?.by || ""} ${convertDate(item.time) || ""}`}</p>
               </article>
             </li>
           );
         })}
       </ol>
+      <button
+        type="button"
+        className="news__button-refresh link-hover"
+        onClick={onRefreshButtonClick}
+      >
+        Refresh news
+      </button>
     </section>
   );
 }
