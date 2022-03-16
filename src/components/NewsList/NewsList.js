@@ -1,23 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./NewsList.css";
-import { convertDate } from "../../utils/convertDate";
+import Article from "../Article/Article";
 
-function NewsList({ news, onRefreshButtonClick }) {
+function NewsList({ news, onRefreshButtonClick, onArticleClick }) {
   return (
     <section className="news">
       <ol className="news__list">
         {news.map((item) => {
           return (
-            <li key={item?.id || ""}>
-              <article className="new">
-                <Link className="new__link link-hover" to={`/new/${item}`}>
-                  {item?.title || ""}
-                </Link>
-                <p className="new__caption">{`${item?.score || 0} point${
-                  item?.score > 1 ? "s" : ""
-                } by ${item?.by || ""} ${convertDate(item.time) || ""}`}</p>
-              </article>
+            <li key={item.id || ""}>
+              <Article
+                article={item}
+                onArticleClick={onArticleClick}
+                isMainPage={true}
+              />
             </li>
           );
         })}
