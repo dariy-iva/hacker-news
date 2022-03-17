@@ -8,8 +8,16 @@ import Article from "../Article/Article";
 import { PreloaderContext } from "../../context/PreloaderContext";
 import { connect } from "react-redux";
 import { getNewsList, clearNews } from "../../redux/slices/newsSlice";
+import { getCommentsList, clearComments } from "../../redux/slices/commentsSlice";
 
-function App({ news, getNewsList, clearNews }) {
+function App({
+  news,
+  getNewsList,
+  clearNews,
+  comments,
+  getCommentsList,
+  clearComments,
+}) {
   const [isOpenPreloader, setIsOpenPreloader] = React.useState(false);
   const [currentNew, setCurrentNew] = React.useState(null);
   const mainPage =
@@ -58,6 +66,7 @@ function App({ news, getNewsList, clearNews }) {
 export default connect(
   (state) => ({
     news: state.news.news,
+    comments: state.comments.comments,
   }),
-  { getNewsList, clearNews }
+  { getNewsList, clearNews, getCommentsList, clearComments }
 )(App);

@@ -5,16 +5,26 @@ import { convertDate } from "../../utils/convertDate";
 
 function Article({ article, onArticleClick, isMainPage }) {
   const { id, title, text, url, score, by, time, kids } = article;
+  const [commentsIsOpen, setCommentsIsOpen] = React.useState(false);
 
-  const articleText = text || 'Follow the link in the title to read the full text';
+  const articleText =
+    text || "Follow the link in the title to read the full text";
 
   const commentsNum = kids ? kids.length : 0;
-  const commentsText = commentsNum > 1 ? "comments" : "comment";
-
-  console.log(article);
+  const commentsText = commentsNum === 1 ? "comment" : "comments";
+  const commentsElementText = commentsNum + " " + commentsText;
+  const commentsButtonClass = `article__caption article__caption_content_comments article__button link-hover ${
+    commentsIsOpen
+      ? "article__button_state-comment_open"
+      : "article__button_state-comment_close"
+  }`;
 
   function handleArticleClick() {
     onArticleClick(article);
+  }
+
+  function handleButtonCommentsClick() {
+    setCommentsIsOpen(!commentsIsOpen);
   }
 
   return (
@@ -43,9 +53,17 @@ function Article({ article, onArticleClick, isMainPage }) {
         <span className="article__caption">{`by ${by || ""} ${
           convertDate(time) || ""
         }`}</span>
-        {!isMainPage && (
-          <button type="button" className="article__caption article__button link-hover">
-            {commentsNum + ' ' + commentsText}
+        {isMainPage || commentsNum === 0 ? (
+          <span className="article__caption article__caption_content_comments">
+            {commentsElementText}
+          </span>
+        ) : (
+          <button
+            type="button"
+            className={commentsButtonClass}
+            onClick={handleButtonCommentsClick}
+          >
+            {commentsElementText}
           </button>
         )}
       </p>

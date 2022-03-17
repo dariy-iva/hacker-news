@@ -4,7 +4,7 @@ import { api } from "../../utils/api";
 const getNew = createAsyncThunk("news/getNew", (newId) => {
   return api
     .getItem(newId)
-    .then(item => item)
+    .then((item) => item)
     .catch((err) => console.log(err));
 });
 
@@ -29,10 +29,7 @@ export const newsSlice = createSlice({
   reducers: {
     clearNews(state) {
       state.news = [];
-    }
-    // setNews(state, action) {
-    //   return [...state, action.payload];
-    // },
+    },
   },
   extraReducers: {
     [getNew.fulfilled]: (state, action) => {
@@ -40,8 +37,6 @@ export const newsSlice = createSlice({
     },
   },
 });
-
-
 
 export const { clearNews } = newsSlice.actions;
 export default newsSlice.reducer;
