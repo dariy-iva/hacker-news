@@ -20,7 +20,7 @@ function CommentsList({ comments }) {
     <ul className="comments">
       {comments.map((item) => {
         return (
-          <li key={item.id}>
+          <li key={item.id} className="comment">
             <p className="comment__info">
               <span className="comment__caption">{`${item.by || ""} ${
                 convertDate(item.time) || ""

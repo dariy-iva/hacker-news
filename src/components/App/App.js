@@ -4,11 +4,15 @@ import "./App.css";
 import Header from "../Header/Header";
 import Preloader from "../Preloader/Preloader";
 import NewsList from "../NewsList/NewsList";
+import NewPage from "../NewPage/NewPage";
 import Article from "../Article/Article";
 import { PreloaderContext } from "../../context/PreloaderContext";
 import { connect } from "react-redux";
 import { getNewsList, clearNews } from "../../redux/slices/newsSlice";
-import { getCommentsList, clearComments } from "../../redux/slices/commentsSlice";
+import {
+  getCommentsList,
+  clearComments,
+} from "../../redux/slices/commentsSlice";
 
 function App({
   news,
@@ -18,6 +22,7 @@ function App({
   getCommentsList,
   clearComments,
 }) {
+  const [commentsIsOpen, setCommentsIsOpen] = React.useState(true);
   const [isOpenPreloader, setIsOpenPreloader] = React.useState(false);
   const [currentNew, setCurrentNew] = React.useState(null);
   const mainPage =
@@ -32,7 +37,14 @@ function App({
     );
 
   function handleArticleClick(dataArticle) {
+    if (dataArticle.kids) {
+      getCommentsList(dataArticle.kids);
+    }
     setCurrentNew(dataArticle);
+  }
+
+  function handleCommentsButtonClick() {
+    setCommentsIsOpen(!commentsIsOpen);
   }
 
   function refreshNewsList() {
@@ -55,7 +67,12 @@ function App({
           {mainPage}
         </Route>
         <Route path="/new">
-          <Article article={currentNew} />
+          <NewPage
+            article={currentNew}
+            comments={comments}
+            commentsIsOpen={commentsIsOpen}
+            onCommentsButtonClick={handleCommentsButtonClick}
+          />
         </Route>
       </Switch>
       <Preloader isVisible={isOpenPreloader} />

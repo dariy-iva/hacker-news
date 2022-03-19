@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import "./Article.css";
 import { convertDate } from "../../utils/convertDate";
 
-function Article({ article, onArticleClick, isMainPage }) {
+function Article({ article, onArticleClick, commentsIsOpen, onCommentsButtonClick ,isMainPage }) {
   const { id, title, text, url, score, by, time, kids } = article;
-  const [commentsIsOpen, setCommentsIsOpen] = React.useState(false);
 
   const articleText =
     text || "Follow the link in the title to read the full text";
@@ -21,10 +20,6 @@ function Article({ article, onArticleClick, isMainPage }) {
 
   function handleArticleClick() {
     onArticleClick(article);
-  }
-
-  function handleButtonCommentsClick() {
-    setCommentsIsOpen(!commentsIsOpen);
   }
 
   return (
@@ -61,7 +56,7 @@ function Article({ article, onArticleClick, isMainPage }) {
           <button
             type="button"
             className={commentsButtonClass}
-            onClick={handleButtonCommentsClick}
+            onClick={onCommentsButtonClick}
           >
             {commentsElementText}
           </button>

@@ -1,0 +1,8 @@
+.new-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 7px 0;
+  padding: 0 40px;
+  box-sizing: border-box;
+}

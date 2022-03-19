@@ -1,3 +1,9 @@
+/* .article {
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+} */
+
 .article__link {
   color: var(--black);
   text-decoration: none;
@@ -14,6 +20,7 @@
   line-height: 1.2;
   font-weight: normal;
   color: var(--black);
+  flex-grow: 1;
 }
 
 .article__info {
@@ -25,7 +32,7 @@
   font-size: 12px;
   line-height: 1.2;
   font-weight: normal;
-  color: var(--black);
+  color: var(--gray);
   box-sizing: border-box;
 }
 
@@ -35,7 +42,7 @@
 
 .article__caption_content_comments {
   padding: 0 0 0 5px;
-  border-left: 1px solid var(--black);
+  border-left: 1px solid var(--gray);
 }
 
 .article__button {
