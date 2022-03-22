@@ -1,23 +1,44 @@
 import React from "react";
 import "./Comment.css";
 import { convertDate } from "../../utils/convertDate";
+import CommentsList from "../CommentsList/CommentsList"
 
-function Comment({ comment }) {
-  const { id, by, time, kids, text } = comment;
-  const [commentsIsOpen, setCommentsIsOpen] = React.useState(false);
+function Comment({ comments, comment, onChildCommentsClick }) {
+  const { by, time, kids, text } = comment;
+  const [childCommentsIsOpen, setChildCommentsIsOpen] = React.useState(false);
+  const [childComments, setChildComments] = React.useState([]);
 
   const commentsButtonClass = `comment__caption comment__caption_content_comments comment__button link-hover ${
-    commentsIsOpen
+    childCommentsIsOpen
       ? "comment__button_state-comment_open"
       : "comment__button_state-comment_close"
   }`;
 
-  function handleButtonCommentsClick() {
-    setCommentsIsOpen(!commentsIsOpen);
+  function getChildComments() {
+
+    comments.forEach(item => {
+      if (kids.includes(item.id) && !childComments.includes(item)) {
+        setChildComments([item, ...childComments]);
+      }
+    });
   }
 
+  function handleButtonCommentsClick() {
+    onChildCommentsClick(comment);
+    // getChildComments();
+    // console.log(childComments)
+    setChildCommentsIsOpen(!childCommentsIsOpen);
+  }
+
+  React.useEffect(() => {
+    if (kids) {
+      getChildComments();
+    }
+    
+  }, [comments])
+
   return (
-    <li key={id} className="comment">
+    <>
       <p className="comment__info">
         <span className="comment__caption">{`${by || ""} ${
           convertDate(time) || ""
@@ -37,7 +58,8 @@ function Comment({ comment }) {
         )}
       </p>
       <p className="comment__text">{text}</p>
-    </li>
+      {childCommentsIsOpen && <CommentsList comments={childComments} onChildCommentsClick={onChildCommentsClick}/>}
+    </>
   );
 }
 

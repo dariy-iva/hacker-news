@@ -1,7 +1,3 @@
-.comment {
-  padding: 0 0 0 20px;
-}
-
 .comment__text {
   box-sizing: border-box;
   margin: 5px 0 0;
@@ -10,6 +6,7 @@
   font-weight: normal;
   color: var(--black);
   flex-grow: 1;
+  max-width: 50%;
 }
 
 .comment__info {

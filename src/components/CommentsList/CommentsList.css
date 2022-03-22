@@ -6,3 +6,7 @@
   grid-row-gap: 7px;
   box-sizing: border-box;
 }
+
+.comments__item {
+  padding: 0 0 0 40px;
+}

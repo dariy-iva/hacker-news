@@ -4,7 +4,20 @@ import "./NewPage.css";
 import Article from "../Article/Article";
 import CommentsList from "../CommentsList/CommentsList";
 
-function NewPage({ article, comments, commentsIsOpen, onCommentsButtonClick }) {
+function NewPage({
+  article,
+  comments,
+  commentsIsOpen,
+  onCommentsButtonClick,
+  clearComments,
+  onChildCommentsClick
+}) {
+  React.useEffect(() => {
+    return () => {
+      clearComments();
+    };
+  }, []);
+
   return (
     <section className="new-page">
       <Article
@@ -13,7 +26,7 @@ function NewPage({ article, comments, commentsIsOpen, onCommentsButtonClick }) {
         commentsIsOpen={commentsIsOpen}
         onCommentsButtonClick={onCommentsButtonClick}
       />
-      {comments && commentsIsOpen && <CommentsList comments={comments} />}
+      {comments && commentsIsOpen && <CommentsList comments={comments} onChildCommentsClick={onChildCommentsClick}/>}
     </section>
   );
 }

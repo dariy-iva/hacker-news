@@ -47,6 +47,13 @@ function App({
     setCommentsIsOpen(!commentsIsOpen);
   }
 
+  function handleChildCommentsButtonClick(dataComment) {
+
+      getCommentsList(dataComment.kids);
+
+    
+  }
+
   function refreshNewsList() {
     clearNews();
     getNewsList();
@@ -72,6 +79,8 @@ function App({
             comments={comments}
             commentsIsOpen={commentsIsOpen}
             onCommentsButtonClick={handleCommentsButtonClick}
+            clearComments={clearComments}
+            onChildCommentsClick={handleChildCommentsButtonClick}
           />
         </Route>
       </Switch>
