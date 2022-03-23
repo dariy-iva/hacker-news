@@ -40,5 +40,5 @@
 
 ##### `npm run build` – production сборка проекта
 
-API: [Hacker News API](https://github.com/HackerNews/API)
+API: [Hacker News API](https://github.com/HackerNews/API)  
 [Ссылка на проект в GH Pages](https://dariy-iva.github.io/hacker-news/)
