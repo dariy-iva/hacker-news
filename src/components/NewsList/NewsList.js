@@ -1,6 +1,7 @@
 import React from "react";
 import "./NewsList.css";
 import Article from "../Article/Article";
+import RefreshButton from "../RefreshButton/RefreshButton"
 
 function NewsList({ news, onRefreshButtonClick, onArticleClick }) {
   return (
@@ -18,13 +19,7 @@ function NewsList({ news, onRefreshButtonClick, onArticleClick }) {
           );
         })}
       </ol>
-      <button
-        type="button"
-        className="news__button-refresh link-hover"
-        onClick={onRefreshButtonClick}
-      >
-        Refresh news
-      </button>
+      <RefreshButton onRefreshButtonClick={onRefreshButtonClick} />
     </section>
   );
 }

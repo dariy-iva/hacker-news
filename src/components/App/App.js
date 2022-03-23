@@ -4,8 +4,7 @@ import "./App.css";
 import Header from "../Header/Header";
 import Preloader from "../Preloader/Preloader";
 import NewsList from "../NewsList/NewsList";
-import NewPage from "../NewPage/NewPage";
-import Article from "../Article/Article";
+import ArticlePage from "../ArticlePage/ArticlePage";
 import { PreloaderContext } from "../../context/PreloaderContext";
 import { connect } from "react-redux";
 import { getNewsList, clearNews } from "../../redux/slices/newsSlice";
@@ -74,7 +73,7 @@ function App({
           {mainPage}
         </Route>
         <Route path="/new">
-          <NewPage
+          <ArticlePage
             article={currentNew}
             comments={comments}
             commentsIsOpen={commentsIsOpen}

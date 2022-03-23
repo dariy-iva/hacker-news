@@ -1,4 +1,5 @@
 import React from "react";
+import parse from 'html-react-parser';
 import { Link } from "react-router-dom";
 import "./Article.css";
 import { convertDate } from "../../utils/convertDate";
@@ -7,7 +8,7 @@ function Article({ article, onArticleClick, commentsIsOpen, onCommentsButtonClic
   const { id, title, text, url, score, by, time, kids } = article;
 
   const articleText =
-    text || "Follow the link in the title to read the full text";
+    text ? parse(text) : "Follow the link in the title to read the full text";
 
   const commentsNum = kids ? kids.length : 0;
   const commentsText = commentsNum === 1 ? "comment" : "comments";
@@ -38,7 +39,7 @@ function Article({ article, onArticleClick, commentsIsOpen, onCommentsButtonClic
         </a>
       )}
 
-      {!isMainPage && <p className="article__text">{articleText}</p>}
+      {!isMainPage && <div className="article__text">{articleText}</div>}
       <p className="article__info">
         {isMainPage && (
           <span className="article__caption">{`${score || 0} point${

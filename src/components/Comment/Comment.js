@@ -1,9 +1,10 @@
 import React from "react";
+import parse from 'html-react-parser';
 import "./Comment.css";
 import { convertDate } from "../../utils/convertDate";
 import CommentsList from "../CommentsList/CommentsList"
 
-function Comment({ comments, comment, onChildCommentsClick }) {
+function Comment({ article, comments, comment, onChildCommentsClick }) {
   const { by, time, kids, text } = comment;
   const [childCommentsIsOpen, setChildCommentsIsOpen] = React.useState(false);
   const [childComments, setChildComments] = React.useState([]);
@@ -13,6 +14,8 @@ function Comment({ comments, comment, onChildCommentsClick }) {
       ? "comment__button_state-comment_open"
       : "comment__button_state-comment_close"
   }`;
+
+  const commentText = text ? parse(text) : "";
 
   function getChildComments() {
 
@@ -25,8 +28,6 @@ function Comment({ comments, comment, onChildCommentsClick }) {
 
   function handleButtonCommentsClick() {
     onChildCommentsClick(comment);
-    // getChildComments();
-    // console.log(childComments)
     setChildCommentsIsOpen(!childCommentsIsOpen);
   }
 
@@ -34,7 +35,6 @@ function Comment({ comments, comment, onChildCommentsClick }) {
     if (kids) {
       getChildComments();
     }
-    
   }, [comments])
 
   return (
@@ -57,8 +57,8 @@ function Comment({ comments, comment, onChildCommentsClick }) {
           </span>
         )}
       </p>
-      <p className="comment__text">{text}</p>
-      {childCommentsIsOpen && <CommentsList comments={childComments} onChildCommentsClick={onChildCommentsClick}/>}
+      <div className="comment__text">{commentText}</div>
+      {childCommentsIsOpen && <CommentsList comments={childComments} onChildCommentsClick={onChildCommentsClick} article={article} isChildCommentsList={true} />}
     </>
   );
 }

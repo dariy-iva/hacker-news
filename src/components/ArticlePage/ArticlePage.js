@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./NewPage.css";
+import "./ArticlePage.css";
 import Article from "../Article/Article";
 import CommentsList from "../CommentsList/CommentsList";
 
-function NewPage({
+function ArticlePage({
   article,
   comments,
   commentsIsOpen,
@@ -26,9 +26,9 @@ function NewPage({
         commentsIsOpen={commentsIsOpen}
         onCommentsButtonClick={onCommentsButtonClick}
       />
-      {comments && commentsIsOpen && <CommentsList comments={comments} onChildCommentsClick={onChildCommentsClick}/>}
+      {comments && commentsIsOpen && <CommentsList article={article} comments={comments} onChildCommentsClick={onChildCommentsClick} isChildCommentsList={false} />}
     </section>
   );
 }
 
-export default NewPage;
+export default ArticlePage;

@@ -26,25 +26,3 @@
   width: 20px;
   height: 20px;
 }
-
-.header__menu {
-
-}
-
-.header__link {
-  color: var(--black);
-  text-decoration: none;
-  font-size: 12px;
-  line-height: 1.2;
-  font-weight: normal;
-  padding: 0 5px;
-  margin: 0;
-}
-
-.header__link:not(:last-child) {
-  border-right: 1px solid var(--black);
-}
-
-.header__link_active {
-  font-weight: 700;
-}
