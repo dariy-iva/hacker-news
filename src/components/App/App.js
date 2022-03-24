@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
 import Preloader from "../Preloader/Preloader";
-import NewsList from "../NewsList/NewsList";
+import MainPage from "../MainPage/MainPage";
 import ArticlePage from "../ArticlePage/ArticlePage";
 import { PreloaderContext } from "../../context/PreloaderContext";
 import { connect } from "react-redux";
@@ -24,16 +24,6 @@ function App({
   const [commentsIsOpen, setCommentsIsOpen] = React.useState(true);
   const [isOpenPreloader, setIsOpenPreloader] = React.useState(false);
   const [currentNew, setCurrentNew] = React.useState(null);
-  const mainPage =
-    news.length > 1 ? (
-      <NewsList
-        news={news}
-        onRefreshButtonClick={refreshNewsList}
-        onArticleClick={handleArticleClick}
-      />
-    ) : (
-      <Preloader isVisible={true} />
-    );
 
   function handleArticleClick(dataArticle) {
     if (dataArticle.kids) {
@@ -47,22 +37,21 @@ function App({
   }
 
   function handleChildCommentsButtonClick(dataComment) {
-
-      getCommentsList(dataComment.kids);
-
-    
+    getCommentsList(dataComment.kids);
   }
 
-  function refreshNewsList() {
+  function handleRefreshComments(dataComment) {
+    clearComments();
+    getCommentsList(dataComment.kids);
+  }
+
+  function handleRefreshNews() {
     clearNews();
     getNewsList();
   }
 
   React.useEffect(() => {
     getNewsList();
-    setInterval(() => {
-      refreshNewsList();
-    }, 60000);
   }, []);
 
   return (
@@ -70,7 +59,15 @@ function App({
       <Header />
       <Switch>
         <Route exact path="/">
-          {mainPage}
+          {news.length > 1 ? (
+            <MainPage
+              news={news}
+              refreshNewsList={handleRefreshNews}
+              onArticleClick={handleArticleClick}
+            />
+          ) : (
+            <Preloader isVisible={true} />
+          )}
         </Route>
         <Route path="/new">
           <ArticlePage
@@ -80,6 +77,7 @@ function App({
             onCommentsButtonClick={handleCommentsButtonClick}
             clearComments={clearComments}
             onChildCommentsClick={handleChildCommentsButtonClick}
+            refreshComments={handleRefreshComments}
           />
         </Route>
       </Switch>

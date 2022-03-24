@@ -1,9 +1,8 @@
-.new-page {
+.news {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  width: 100%;
   margin: 0;
-  padding: 7px 40px;
-  box-sizing: border-box;
+  padding: 7px 0;
   position: relative;
 }

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./ArticlePage.css";
 import Article from "../Article/Article";
 import CommentsList from "../CommentsList/CommentsList";
+import RefreshButton from "../RefreshButton/RefreshButton";
 
 function ArticlePage({
   article,
@@ -10,13 +11,18 @@ function ArticlePage({
   commentsIsOpen,
   onCommentsButtonClick,
   clearComments,
-  onChildCommentsClick
+  onChildCommentsClick,
+  refreshComments
 }) {
   React.useEffect(() => {
     return () => {
       clearComments();
     };
   }, []);
+
+  function handleRefreshComments() {
+    refreshComments(article);
+  }
 
   return (
     <section className="new-page">
@@ -26,7 +32,15 @@ function ArticlePage({
         commentsIsOpen={commentsIsOpen}
         onCommentsButtonClick={onCommentsButtonClick}
       />
-      {comments && commentsIsOpen && <CommentsList article={article} comments={comments} onChildCommentsClick={onChildCommentsClick} isChildCommentsList={false} />}
+      {comments && commentsIsOpen && (
+        <CommentsList
+          article={article}
+          comments={comments}
+          onChildCommentsClick={onChildCommentsClick}
+          isChildCommentsList={false}
+        />
+      )}
+      <RefreshButton onRefreshButtonClick={handleRefreshComments} content="comments" />
     </section>
   );
 }
