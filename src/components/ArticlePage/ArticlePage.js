@@ -12,8 +12,18 @@ function ArticlePage({
   onCommentsButtonClick,
   clearComments,
   onChildCommentsClick,
-  refreshComments
+  refreshComments,
 }) {
+  const [commentsIsLoad, setCommentsIsLoad] = React.useState();
+
+  React.useEffect(() => {
+    if ((article.kids.length <= comments.length) || !article.kids) {
+      setCommentsIsLoad(true);
+    } else {
+      setCommentsIsLoad(false);
+    }
+  }, [comments, article]);
+
   React.useEffect(() => {
     return () => {
       clearComments();
@@ -40,7 +50,11 @@ function ArticlePage({
           isChildCommentsList={false}
         />
       )}
-      <RefreshButton onRefreshButtonClick={handleRefreshComments} content="comments" />
+      <RefreshButton
+        onRefreshButtonClick={handleRefreshComments}
+        content="comments"
+        isLoad={commentsIsLoad}
+      />
     </section>
   );
 }

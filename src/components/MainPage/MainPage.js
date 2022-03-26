@@ -4,11 +4,15 @@ import NewsList from "../NewsList/NewsList";
 import RefreshButton from "../RefreshButton/RefreshButton";
 
 function MainPage({ news, refreshNewsList, onArticleClick }) {
+  const [newsIsLoad, setNewsIsLoad] = React.useState();
+
+  React.useEffect(() => {
+    news.length === 100 ? setNewsIsLoad(true) : setNewsIsLoad(false);
+  }, [news]);
 
   React.useEffect(() => {
     const refreshInterval = setInterval(() => {
       refreshNewsList();
-      console.log(1)
     }, 60000);
     return () => {
       clearInterval(refreshInterval);
@@ -18,7 +22,7 @@ function MainPage({ news, refreshNewsList, onArticleClick }) {
   return (
     <section className="news">
       <NewsList news={news} onArticleClick={onArticleClick} />
-      <RefreshButton onRefreshButtonClick={refreshNewsList} content="news" />
+      <RefreshButton onRefreshButtonClick={refreshNewsList} content="news" isLoad={newsIsLoad} />
     </section>
   );
 }
