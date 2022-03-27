@@ -25,9 +25,13 @@ function ArticlePage({
   }, [comments, article]);
 
   React.useEffect(() => {
+    const refreshInterval = setInterval(() => {
+      refreshComments(article);
+    }, 60000);
     return () => {
+      clearInterval(refreshInterval);
       clearComments();
-    };
+    }
   }, []);
 
   function handleRefreshComments() {
