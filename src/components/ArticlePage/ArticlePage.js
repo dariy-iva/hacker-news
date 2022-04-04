@@ -17,7 +17,7 @@ function ArticlePage({
   const [commentsIsLoad, setCommentsIsLoad] = React.useState();
 
   React.useEffect(() => {
-    if ((article.kids.length <= comments.length) || !article.kids) {
+    if ((!article.kids || article.kids.length <= comments.length)) {
       setCommentsIsLoad(true);
     } else {
       setCommentsIsLoad(false);

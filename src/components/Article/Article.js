@@ -1,18 +1,25 @@
 import React from "react";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 import { Link } from "react-router-dom";
 import "./Article.css";
 import { convertDate } from "../../utils/convertDate";
 
-function Article({ article, onArticleClick, commentsIsOpen, onCommentsButtonClick ,isMainPage }) {
+function Article({
+  article,
+  onArticleClick,
+  commentsIsOpen,
+  onCommentsButtonClick,
+  isMainPage,
+}) {
   const { id, title, text, url, score, by, time, kids } = article;
 
-  const articleText =
-    text ? parse(text) : "Follow the link in the title to read the full text";
+  const articleText = text
+    ? parse(text)
+    : "Follow the link in the title to read the full text";
 
   const commentsNum = kids ? kids.length : 0;
   const commentsText = commentsNum === 1 ? "comment" : "comments";
-  const commentsElementText = commentsNum + " " + commentsText;
+  const commentsElementText = (commentsNum || "no") + " " + commentsText;
   const commentsButtonClass = `article__caption article__caption_content_comments article__button link-hover ${
     commentsIsOpen
       ? "article__button_state-comment_open"

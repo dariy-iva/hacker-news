@@ -3,6 +3,7 @@ import "./NewsList.css";
 import Article from "../Article/Article";
 
 function NewsList({ news, onArticleClick }) {
+// console.log(news)
   return (
     <ol className="news__list">
       {news.map((item) => {

@@ -29,6 +29,7 @@ export const commentsSlice = createSlice({
   extraReducers: {
     [getComment.fulfilled]: (state, action) => {
       state.comments = [...state.comments, action.payload];
+      state.comments.sort((a,b) =>  b.time - a.time);
     },
   },
 });

@@ -12,6 +12,7 @@ import {
   getCommentsList,
   clearComments,
 } from "../../redux/slices/commentsSlice";
+import {api} from "../../utils/api"
 
 function App({
   news,
@@ -40,9 +41,11 @@ function App({
     getCommentsList(dataComment.kids);
   }
 
-  function handleRefreshComments(dataComment) {
+  function handleRefreshComments(dataArticle) {
     clearComments();
-    getCommentsList(dataComment.kids);
+    api
+    .getItem(dataArticle.id)
+    .then((article) => getCommentsList(article.kids))
   }
 
   function handleRefreshNews() {
