@@ -12,7 +12,7 @@ import {
   getCommentsList,
   clearComments,
 } from "../../redux/slices/commentsSlice";
-import {api} from "../../utils/api"
+import { api } from "../../utils/api";
 
 function App({
   news,
@@ -22,7 +22,6 @@ function App({
   getCommentsList,
   clearComments,
 }) {
-  const [commentsIsOpen, setCommentsIsOpen] = React.useState(true);
   const [isOpenPreloader, setIsOpenPreloader] = React.useState(false);
   const [currentNew, setCurrentNew] = React.useState(null);
 
@@ -33,10 +32,6 @@ function App({
     setCurrentNew(dataArticle);
   }
 
-  function handleCommentsButtonClick() {
-    setCommentsIsOpen(!commentsIsOpen);
-  }
-
   function handleChildCommentsButtonClick(dataComment) {
     getCommentsList(dataComment.kids);
   }
@@ -44,8 +39,8 @@ function App({
   function handleRefreshComments(dataArticle) {
     clearComments();
     api
-    .getItem(dataArticle.id)
-    .then((article) => getCommentsList(article.kids))
+      .getItem(dataArticle.id)
+      .then((article) => getCommentsList(article.kids));
   }
 
   function handleRefreshNews() {
@@ -76,8 +71,6 @@ function App({
           <ArticlePage
             article={currentNew}
             comments={comments}
-            commentsIsOpen={commentsIsOpen}
-            onCommentsButtonClick={handleCommentsButtonClick}
             clearComments={clearComments}
             onChildCommentsClick={handleChildCommentsButtonClick}
             refreshComments={handleRefreshComments}

@@ -16,13 +16,17 @@ function MainPage({ news, refreshNewsList, onArticleClick }) {
     }, 60000);
     return () => {
       clearInterval(refreshInterval);
-    }
+    };
   }, []);
 
   return (
     <section className="news">
       <NewsList news={news} onArticleClick={onArticleClick} />
-      <RefreshButton onRefreshButtonClick={refreshNewsList} content="news" isLoad={newsIsLoad} />
+      <RefreshButton
+        onRefreshButtonClick={refreshNewsList}
+        content="news"
+        isLoad={newsIsLoad}
+      />
     </section>
   );
 }

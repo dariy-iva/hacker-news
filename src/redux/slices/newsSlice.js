@@ -30,9 +30,6 @@ export const newsSlice = createSlice({
     clearNews(state) {
       state.news = [];
     },
-    sortNews(state) {
-      state.news.sort((a, b) => b.time - a.time);
-    },
   },
   extraReducers: {
     [getNew.fulfilled]: (state, action) => {
@@ -42,5 +39,5 @@ export const newsSlice = createSlice({
   },
 });
 
-export const { clearNews, sortNews } = newsSlice.actions;
+export const { clearNews } = newsSlice.actions;
 export default newsSlice.reducer;

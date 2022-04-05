@@ -1,10 +1,10 @@
 import React from "react";
-import parse from 'html-react-parser';
+import parse from "html-react-parser";
 import "./Comment.css";
 import { convertDate } from "../../utils/convertDate";
-import CommentsList from "../CommentsList/CommentsList"
+import CommentsList from "../CommentsList/CommentsList";
 
-function Comment({ article, comments, comment, onChildCommentsClick }) {
+function Comment({ comments, comment, onChildCommentsClick }) {
   const { by, time, kids, text } = comment;
   const [childCommentsIsOpen, setChildCommentsIsOpen] = React.useState(false);
   const [childComments, setChildComments] = React.useState([]);
@@ -18,8 +18,7 @@ function Comment({ article, comments, comment, onChildCommentsClick }) {
   const commentText = text ? parse(text) : "";
 
   function getChildComments() {
-
-    comments.forEach(item => {
+    comments.forEach((item) => {
       if (kids.includes(item.id) && !childComments.includes(item)) {
         setChildComments([item, ...childComments]);
       }
@@ -35,7 +34,7 @@ function Comment({ article, comments, comment, onChildCommentsClick }) {
     if (kids) {
       getChildComments();
     }
-  }, [comments])
+  }, [comments]);
 
   return (
     <>
@@ -58,7 +57,13 @@ function Comment({ article, comments, comment, onChildCommentsClick }) {
         )}
       </p>
       <div className="comment__text">{commentText}</div>
-      {childCommentsIsOpen && <CommentsList comments={childComments} onChildCommentsClick={onChildCommentsClick} article={article} isChildCommentsList={true} />}
+      {childCommentsIsOpen && (
+        <CommentsList
+          comments={comments}
+          onChildCommentsClick={onChildCommentsClick}
+          article={comment}
+        />
+      )}
     </>
   );
 }

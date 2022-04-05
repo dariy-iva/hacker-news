@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./ArticlePage.css";
 import Article from "../Article/Article";
 import CommentsList from "../CommentsList/CommentsList";
@@ -8,16 +7,23 @@ import RefreshButton from "../RefreshButton/RefreshButton";
 function ArticlePage({
   article,
   comments,
-  commentsIsOpen,
-  onCommentsButtonClick,
   clearComments,
   onChildCommentsClick,
   refreshComments,
 }) {
+  const [commentsIsOpen, setCommentsIsOpen] = React.useState(true);
   const [commentsIsLoad, setCommentsIsLoad] = React.useState();
 
+  function handleCommentsButtonClick() {
+    setCommentsIsOpen(!commentsIsOpen);
+  }
+
+  function handleRefreshComments() {
+    refreshComments(article);
+  }
+
   React.useEffect(() => {
-    if ((!article.kids || article.kids.length <= comments.length)) {
+    if (!article.kids || article.kids.length <= comments.length) {
       setCommentsIsLoad(true);
     } else {
       setCommentsIsLoad(false);
@@ -31,12 +37,8 @@ function ArticlePage({
     return () => {
       clearInterval(refreshInterval);
       clearComments();
-    }
+    };
   }, []);
-
-  function handleRefreshComments() {
-    refreshComments(article);
-  }
 
   return (
     <section className="new-page">
@@ -44,14 +46,13 @@ function ArticlePage({
         article={article}
         isMainPage={false}
         commentsIsOpen={commentsIsOpen}
-        onCommentsButtonClick={onCommentsButtonClick}
+        onCommentsButtonClick={handleCommentsButtonClick}
       />
-      {comments && commentsIsOpen && (
+      {comments && commentsIsOpen && commentsIsLoad && (
         <CommentsList
           article={article}
           comments={comments}
           onChildCommentsClick={onChildCommentsClick}
-          isChildCommentsList={false}
         />
       )}
       <RefreshButton
